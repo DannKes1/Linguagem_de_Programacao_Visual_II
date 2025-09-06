@@ -80,7 +80,7 @@ ViewData["Title"] = "Lista de Produtos";
                 return response.json();
             })
             .then(data => {
-                // Formata o JSON para exibição amigável
+                
                 resultArea.textContent = JSON.stringify(data, null, 2);
             })
             .catch(error => {

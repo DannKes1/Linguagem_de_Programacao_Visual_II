@@ -1,4 +1,4 @@
-// Controllers/ProdutoController.cs
+
 
 using GerenciamentoProdutos.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +9,7 @@ namespace GerenciamentoProdutos.Controllers
 {
     public class ProdutoController : Controller
     {
-        // Lista estática para simular um banco de dados
+        
         private static readonly List<Produto> _produtos = new List<Produto>
         {
             new Produto { Id = 1, Nome = "Smartphone XYZ", Preco = 1999.99m, Categoria = "Eletrônicos", EmEstoque = true, DataCadastro = DateTime.Now.AddDays(-10) },
@@ -20,30 +20,26 @@ namespace GerenciamentoProdutos.Controllers
             new Produto { Id = 6, Nome = "Manual Técnico", Preco = 120.00m, Categoria = "Livros", EmEstoque = false, DataCadastro = DateTime.Now.AddDays(-2) }
         };
 
-        // =======================================================================
-        // A) ViewResult Actions
-        // =======================================================================
-
-        // Exibe a lista de todos os produtos
+    
         public IActionResult Index()
         {
-            // Passa a lista de categorias para o dropdown de filtro na View
+           
             ViewBag.Categorias = _produtos.Select(p => p.Categoria).Distinct().ToList();
             return View(_produtos);
         }
 
-        // Mostra os detalhes de um produto específico
+        
         public IActionResult Detalhes(int id)
         {
             var produto = _produtos.FirstOrDefault(p => p.Id == id);
             if (produto == null)
             {
-                return NotFound(); // Retorna um erro 404 se o produto não for encontrado
+                return NotFound(); 
             }
             return View(produto);
         }
 
-        // Filtra e exibe produtos por categoria
+ 
         public IActionResult Categoria(string categoria)
         {
             if (string.IsNullOrEmpty(categoria))
@@ -55,17 +51,13 @@ namespace GerenciamentoProdutos.Controllers
             return View(produtosFiltrados);
         }
 
-        // =======================================================================
-        // B) JsonResult Actions
-        // =======================================================================
-
-        // Retorna todos os produtos em formato JSON
+    
         public IActionResult ObterProdutosJson()
         {
             return Json(new { sucesso = true, dados = _produtos });
         }
 
-        // Retorna um produto específico em formato JSON
+
         public IActionResult BuscarProduto(int id)
         {
             var produto = _produtos.FirstOrDefault(p => p.Id == id);
@@ -76,7 +68,7 @@ namespace GerenciamentoProdutos.Controllers
             return Json(new { sucesso = true, dados = produto });
         }
         
-        // Retorna produtos filtrados por categoria em formato JSON
+       
         public IActionResult ProdutosPorCategoria(string categoria)
         {
             var produtosFiltrados = _produtos
@@ -86,11 +78,7 @@ namespace GerenciamentoProdutos.Controllers
             return Json(new { sucesso = true, contagem = produtosFiltrados.Count, dados = produtosFiltrados });
         }
 
-        // =======================================================================
-        // C) FileResult Actions
-        // =======================================================================
-
-        // Gera e baixa um arquivo CSV com a lista de produtos
+        
         public IActionResult ExportarCsv()
         {
             var builder = new StringBuilder();
@@ -104,7 +92,7 @@ namespace GerenciamentoProdutos.Controllers
             return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/csv", "produtos.csv");
         }
 
-        // Gera e baixa um relatório em arquivo de texto (.txt)
+  
         public IActionResult RelatorioTxt()
         {
             var builder = new StringBuilder();
@@ -130,7 +118,7 @@ namespace GerenciamentoProdutos.Controllers
             return File(Encoding.UTF8.GetBytes(builder.ToString()), "text/plain", "relatorio_produtos.txt");
         }
 
-        // Gera e baixa um arquivo JSON completo com todos os produtos
+     
         public IActionResult ExportarJson()
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
