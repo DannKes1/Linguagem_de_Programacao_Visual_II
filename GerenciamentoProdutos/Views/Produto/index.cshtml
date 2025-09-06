@@ -1,0 +1,92 @@
+@* Views/Produto/Index.cshtml *@
+@model List<GerenciamentoProdutos.Models.Produto>
+
+@{
+ViewData["Title"] = "Lista de Produtos";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<div class="row mb-4">
+    <div class="col-md-6">
+        <h4>Filtrar por Categoria</h4>
+        <form asp-action="Categoria" method="get" class="form-inline">
+            <select name="categoria" class="form-control mr-2">
+                <option value="">Todas</option>
+                @foreach (var categoria in ViewBag.Categorias)
+                {
+                <option value="@categoria">@categoria</option>
+                }
+            </select>
+            <button type="submit" class="btn btn-primary">Filtrar</button>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Exportar Dados</h4>
+        <a class="btn btn-secondary" asp-action="ExportarCsv">Baixar CSV</a>
+        <a class="btn btn-secondary" asp-action="RelatorioTxt">Baixar Relatório TXT</a>
+        <a class="btn btn-secondary" asp-action="ExportarJson">Baixar JSON</a>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead class="thead-dark">
+    <tr>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Categoria</th>
+        <th>Em Estoque</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var produto in Model)
+    {
+    <tr>
+        <td>@produto.Nome</td>
+        <td>@produto.Preco.ToString("C")</td>
+        <td>@produto.Categoria</td>
+        <td>@(produto.EmEstoque ? "Sim" : "Não")</td>
+        <td>
+            <a asp-action="Detalhes" asp-route-id="@produto.Id" class="btn btn-info btn-sm">Ver Detalhes</a>
+        </td>
+    </tr>
+    }
+    </tbody>
+</table>
+
+<hr />
+
+<div>
+    <h4>Dados em Tempo Real (JSON)</h4>
+    <button id="btnObterJson" class="btn btn-success">Obter Produtos via JSON (AJAX)</button>
+    <pre id="json-result" class="mt-2" style="background-color: #f0f0f0; border: 1px solid #ccc; padding: 10px;"></pre>
+</div>
+
+
+@section Scripts {
+<script>
+    document.getElementById('btnObterJson').addEventListener('click', function () {
+        const resultArea = document.getElementById('json-result');
+        resultArea.textContent = 'Carregando...';
+
+        fetch('@Url.Action("ObterProdutosJson", "Produto")')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro na rede: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Formata o JSON para exibição amigável
+                resultArea.textContent = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                resultArea.textContent = 'Ocorreu um erro ao buscar os dados: ' + error;
+                console.error('Erro no fetch:', error);
+            });
+    });
+</script>
+}
