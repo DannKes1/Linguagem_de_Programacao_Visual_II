@@ -1,0 +1,66 @@
+@* Views/Produto/Detalhes.cshtml *@
+@model GerenciadorProdutos.ViewModels.ProdutoDetalhesViewModel
+
+@{
+    ViewData["Title"] = Model.NomeProduto;
+}
+
+<h1>Detalhes do Produto</h1>
+
+<div>
+    <h2 class="display-4">@Model.NomeProduto</h2>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Preço</dt>
+        <dd class="col-sm-9 fs-4 text-success fw-bold">@Model.PrecoFormatado</dd>
+
+        <dt class="col-sm-3">@Model.CategoriaExibicao</dt>
+        <dd class="col-sm-9"></dd>
+
+        <dt class="col-sm-3">Status</dt>
+        <dd class="col-sm-9">
+            @if (Model.StatusAtivo)
+            {
+                <span class="badge bg-success">Ativo</span>
+            }
+            else
+            {
+                <span class="badge bg-danger">Inativo</span>
+            }
+        </dd>
+
+        <dt class="col-sm-3">Tempo no Sistema</dt>
+        <dd class="col-sm-9">@Model.TempoNoSistema</dd>
+
+        <dt class="col-sm-3">Tags</dt>
+        <dd class="col-sm-9"><kbd>@Model.TagsExibicao</kbd></dd>
+        
+        <dt class="col-sm-3">Mensagem</dt>
+        <dd class="col-sm-9">
+            <div class="alert alert-info mt-2">@Model.MensagemPromocional</div>
+        </dd>
+    </dl>
+</div>
+
+@if (Model.Relacionados.Any())
+{
+    <div class="mt-5">
+        <h3>Produtos Relacionados</h3>
+        <ul class="list-group">
+            @foreach (var relacionado in Model.Relacionados)
+            {
+                <li class="list-group-item">
+                    <a asp-action="Detalhes" asp-route-id="@relacionado.Id">
+                        @relacionado.Nome
+                    </a>
+                    <span class="float-end">(@relacionado.Preco.ToString("C", new System.Globalization.CultureInfo("pt-BR")))</span>
+                </li>
+            }
+        </ul>
+    </div>
+}
+
+
+<div class="mt-4">
+    <a asp-action="Lista" class="btn btn-primary">Voltar para a Lista</a>
+</div>
