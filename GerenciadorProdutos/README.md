@@ -61,5 +61,5 @@ Para simplificar a execução e focar na arquitetura, o projeto utiliza uma list
 
 **Clone o repositório:**
 ```bash
-git clone https://github.com/DannKes1/Linguagem_de_Programacao_Visual_II.git
-cd Linguagem_de_Programacao_Visual_II
+git clone <URL_DO_SEU_REPOSITORIO>
+cd <NOME_DA_PASTA>
