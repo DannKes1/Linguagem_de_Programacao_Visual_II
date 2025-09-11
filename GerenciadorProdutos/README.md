@@ -63,3 +63,52 @@ Para simplificar a execução e focar na arquitetura, o projeto utiliza uma list
 ```bash
 git clone <URL_DO_SEU_REPOSITORIO>
 cd <NOME_DA_PASTA>
+Abra no seu editor:
+
+No Rider/Visual Studio: Abra o arquivo da solução (.sln).
+
+No VS Code: Abra a pasta raiz do projeto.
+
+Execute a aplicação:
+
+No Rider/Visual Studio: Pressione o botão de "Play" (▶️) ou a tecla F5.
+
+Via linha de comando:
+
+bash
+Copiar código
+dotnet run
+Acesse no navegador:
+
+A aplicação será iniciada em um endereço como https://localhost:7XXX.
+
+Navegue para /Produto/Lista para ver a página principal.
+
+📂 Estrutura do Projeto
+bash
+Copiar código
+/
+├── Controllers/
+│   └── ProdutoController.cs         # Orquestra as requisições
+├── Extensions/
+│   └── ProdutoExtensions.cs         # Contém a lógica de mapeamento e formatação
+├── Models/
+│   └── Produto.cs                   # Modelo de domínio puro
+├── ViewModels/
+│   ├── ProdutoDetalhesViewModel.cs      # Shape de dados para a View de Detalhes
+│   └── ProdutoListagemItemViewModel.cs # Shape de dados para a View de Listagem
+├── Views/
+│   └── Produto/
+│       ├── Detalhes.cshtml          # Página de detalhes do produto
+│       └── Lista.cshtml             # Página de listagem com filtros
+└── wwwroot/                         # Arquivos estáticos (CSS, JS)
+🌐 URLs para Teste
+Lista Padrão: /Produto/Lista
+
+Filtrar por Categoria: /Produto/Lista?categoria=Eletrônicos
+
+Ordenar por Nome: /Produto/Lista?ordenarPor=nome
+
+Ordenar e Filtrar: /Produto/Lista?categoria=Áudio&ordenarPor=preco_desc
+
+Página de Detalhes: /Produto/Detalhes/1
