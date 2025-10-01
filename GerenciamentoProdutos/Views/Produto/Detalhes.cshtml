@@ -1,0 +1,34 @@
+@* Views/Produto/Detalhes.cshtml *@
+@model GerenciamentoProdutos.Models.Produto
+
+@{
+    ViewData["Title"] = "Detalhes do Produto";
+}
+
+<h1>@ViewData["Title"]: @Model.Nome</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">ID</dt>
+        <dd class="col-sm-9">@Model.Id</dd>
+
+        <dt class="col-sm-3">Nome</dt>
+        <dd class="col-sm-9">@Model.Nome</dd>
+
+        <dt class="col-sm-3">Preço</dt>
+        <dd class="col-sm-9">@Model.Preco.ToString("C")</dd>
+
+        <dt class="col-sm-3">Categoria</dt>
+        <dd class="col-sm-9">@Model.Categoria</dd>
+
+        <dt class="col-sm-3">Em Estoque</dt>
+        <dd class="col-sm-9">@(Model.EmEstoque ? "Sim" : "Não")</dd>
+
+        <dt class="col-sm-3">Data de Cadastro</dt>
+        <dd class="col-sm-9">@Model.DataCadastro.ToString("dd/MM/yyyy")</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index" class="btn btn-primary">Voltar à Lista</a>
+</div>
